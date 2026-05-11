@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/styles/main.css">
+  <title>Joke Generator Form</title>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>🎭 Joke Preferences</h2>
+
+  <form method="POST" action="/submit">
+
+    <!-- Name -->
+    <label>Your Name</label>
+    <input type="text" name="username" placeholder="Enter your name..." required />
+
+    <!-- Joke Type -->
+    <label>Joke Type</label>
+    <div class="radio-group">
+      <label>
+        <input type="radio" name="jokeType" value="Any" checked onclick="setMode('any')">
+        Any
+      </label>
+
+      <label>
+        <input type="radio" name="jokeType" value="custom" onclick="setMode('custom')">
+        Custom
+      </label>
+    </div>
+
+    <!-- Custom Button -->
+    <button type="button" class="btn btn-custom" id="customBtn" onclick="toggleCategories()" disabled>
+      Choose Custom Joke Styles
+    </button>
+
+    <!-- Categories -->
+    <div class="category-box" id="categoryBox">
+      <label><input type="checkbox" name="styles" value="Misc"> Misc</label>
+      <label><input type="checkbox" name="styles" value="Programming"> Programming</label>
+      <label><input type="checkbox" name="styles" value="Dark"> Dark</label>
+      <label><input type="checkbox" name="styles" value="Pun"> Pun</label>
+      <label><input type="checkbox" name="styles" value="Spooky"> Spooky</label>
+      <label><input type="checkbox" name="styles" value="Christmas"> Christmas</label>
+    </div>
+<div class="filter-section">
+  <h3>🚫 Exclude Joke Types</h3>
+
+  <label>
+    <input type="checkbox" name="blacklist" value="nsfw">
+    NSFW
+  </label>
+
+  <label>
+    <input type="checkbox" name="blacklist" value="religious">
+    Religious
+  </label>
+
+  <label>
+    <input type="checkbox" name="blacklist" value="political">
+    Political
+  </label>
+
+  <label>
+    <input type="checkbox" name="blacklist" value="racist">
+    Racist
+  </label>
+
+  <label>
+    <input type="checkbox" name="blacklist" value="sexist">
+    Sexist
+  </label>
+
+  <label>
+    <input type="checkbox" name="blacklist" value="explicit">
+    Explicit
+  </label>
+</div>
+    <button class="btn submit-btn" type="submit">Generate Joke</button>
+
+  </form>
+  <div class="response-area">
+    <p> <%= name%></p>
+    <p> <%= content%></p>
+  </div>
+</div>
+
+<script>
+  let mode = "any";
+
+  function setMode(selected) {
+    mode = selected;
+
+    const customBtn = document.getElementById("customBtn");
+    const categoryBox = document.getElementById("categoryBox");
+
+    if (selected === "any") {
+      customBtn.disabled = true;
+      categoryBox.style.display = "none";
+
+      // uncheck all categories
+      document.querySelectorAll("input[name='styles']").forEach(cb => cb.checked = false);
+    } else {
+      customBtn.disabled = false;
+    }
+  }
+
+  function toggleCategories() {
+    const box = document.getElementById("categoryBox");
+
+    if (box.style.display === "block") {
+      box.style.display = "none";
+    } else {
+      box.style.display = "block";
+    }
+  }
+</script>
+
+</body>
+</html>
